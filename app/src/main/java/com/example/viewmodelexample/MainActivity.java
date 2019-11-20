@@ -1,6 +1,7 @@
 package com.example.viewmodelexample;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,8 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton floatingActionButton;
     TextView count;
-    private int clickCount = 0;
+
+private MainActivityViewModel mMainActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,20 +26,20 @@ public class MainActivity extends AppCompatActivity {
 
         count = findViewById(R.id.count);
 
-        count.setText(""+clickCount);
+
+        mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+
+        count.setText(""+mMainActivityViewModel.getInitialCount());
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                count.setText(""+getCurrentCount());
+                count.setText(""+mMainActivityViewModel.getCurrentCount());
             }
         });
 
     }
 
-    public int getCurrentCount(){
-        clickCount+= 1;
-        return clickCount;
-    }
+
 }
