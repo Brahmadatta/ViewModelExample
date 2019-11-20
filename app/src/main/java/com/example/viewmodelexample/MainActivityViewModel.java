@@ -1,18 +1,21 @@
 package com.example.viewmodelexample;
 
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class MainActivityViewModel extends ViewModel {
 
     private int clickCount = 0;
+    public MutableLiveData<Integer> countLiveData = new MutableLiveData<>();
 
-    public int getInitialCount(){
-        return clickCount;
+    public MutableLiveData<Integer> getInitialCount(){
+        countLiveData.setValue(clickCount);
+        return countLiveData;
     }
 
-    public int getCurrentCount(){
+    public void getCurrentCount(){
         clickCount+= 1;
-        return clickCount;
+        countLiveData.setValue(clickCount);
     }
 }

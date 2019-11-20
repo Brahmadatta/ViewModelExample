@@ -1,6 +1,8 @@
 package com.example.viewmodelexample;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -29,13 +31,22 @@ private MainActivityViewModel mMainActivityViewModel;
 
         mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
-        count.setText(""+mMainActivityViewModel.getInitialCount());
+        LiveData<Integer> countLiveData = mMainActivityViewModel.getInitialCount();
+
+        countLiveData.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                count.setText(""+integer);
+            }
+        });
+
+
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                count.setText(""+mMainActivityViewModel.getCurrentCount());
+                mMainActivityViewModel.getCurrentCount();
             }
         });
 
